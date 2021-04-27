@@ -2,11 +2,14 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Services.Cars.Commands;
 using Services.Cars.Queries;
 using Services.Models;
 
 namespace MediatRWebApp.Controllers
 {
+    [ApiController]
+    [Route("cars")]
     public class HomeController : Controller
     {
         private readonly IMediator _mediator;
@@ -15,15 +18,16 @@ namespace MediatRWebApp.Controllers
         {
             _mediator = mediator;
         }
-        
-        // public Task<IEnumerable<Car>> Index([FromBody] GetAllCarsQuery query)
-        // {
-        //     return _mediator.Send(query);
-        // }
-        
+
+        [HttpGet]
         public Task<IEnumerable<Car>> Index()
         {
             return _mediator.Send(new GetAllCarsQuery());
+        }
+
+        public Task<string> Index([FromBody] CreateCarCommand command)
+        {
+            return _mediator.Send(command);
         }
     }
 }
