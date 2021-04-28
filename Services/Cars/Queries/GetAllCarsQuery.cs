@@ -6,7 +6,7 @@ using Services.Models;
 
 namespace Services.Cars.Queries
 {
-    public class GetAllCarsQuery : IRequest<IEnumerable<Car>>
+    public class GetAllCarsQuery : BaseRequest, IRequest<IEnumerable<Car>>
     {
         
     }
@@ -23,8 +23,8 @@ namespace Services.Cars.Queries
         {
             return new[]
             {
-                new Car {Name = "Ford"},
-                new Car {Name = "Toyta"},
+                new Car { Name = $"Ford {request.UserId}" },
+                new Car { Name = "Toyta" },
             };
         }
     }

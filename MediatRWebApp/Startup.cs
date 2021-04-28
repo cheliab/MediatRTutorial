@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
+using MediatRWebApp.Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -22,6 +23,8 @@ namespace MediatRWebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
+
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UserIdPipe<,>));
             services.AddMediatR(typeof(GetAllCarsQuery).Assembly);
             
             services.AddControllers();

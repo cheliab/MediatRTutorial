@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualBasic;
+using Services;
 
 namespace MediatRWebApp.Infrastructure
 {
@@ -25,8 +26,13 @@ namespace MediatRWebApp.Infrastructure
             var userID = _httpContext.User.Claims
                 .FirstOrDefault(x => x.Type.Equals(ClaimTypes.NameIdentifier))
                 ?.Value;
-            
-            throw new System.NotImplementedException();
+
+            if (request is BaseRequest br)
+            {
+                br.UserId = "UserId_1";
+            }
+
+            return next();
         }
     }
 }
