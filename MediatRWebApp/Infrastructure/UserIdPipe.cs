@@ -13,7 +13,7 @@ namespace MediatRWebApp.Infrastructure
     {
         private HttpContext _httpContext;
         
-        public UserIdPipe(HttpContextAccessor accessor)
+        public UserIdPipe(IHttpContextAccessor accessor)
         {
             _httpContext = accessor.HttpContext;
         }

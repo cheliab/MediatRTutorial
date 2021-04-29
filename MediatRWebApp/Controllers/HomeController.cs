@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Services;
 using Services.Cars.Commands;
 using Services.Cars.Queries;
 using Services.Models;
@@ -25,7 +26,8 @@ namespace MediatRWebApp.Controllers
             return _mediator.Send(new GetAllCarsQuery());
         }
 
-        public Task<string> Index([FromBody] CreateCarCommand command)
+        [HttpPost]
+        public Task<Response<Car>> Index([FromBody] CreateCarCommand command)
         {
             return _mediator.Send(command);
         }
