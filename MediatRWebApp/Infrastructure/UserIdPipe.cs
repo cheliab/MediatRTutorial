@@ -6,6 +6,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.VisualBasic;
 using Services;
+using Services.Models;
 
 namespace MediatRWebApp.Infrastructure
 {
@@ -18,7 +19,7 @@ namespace MediatRWebApp.Infrastructure
             _httpContext = accessor.HttpContext;
         }
         
-        public Task<TOut> Handle(
+        public async Task<TOut> Handle(
             TIn request, 
             CancellationToken cancellationToken, 
             RequestHandlerDelegate<TOut> next)
@@ -32,7 +33,14 @@ namespace MediatRWebApp.Infrastructure
                 br.UserId = "UserId_1";
             }
 
-            return next();
+            var result = await next();
+
+            if (result is Response<Car> carResponse)
+            {
+                carResponse.Data.Name += " (checked)";
+            }
+
+            return result;
         }
     }
 }
